@@ -1,0 +1,29 @@
+import time
+import smbus
+
+i2caddress = 1
+
+
+sensor_address = 0x5a
+
+
+temp_ram_loc = 0x03
+
+bus = smbus.SMBus(i2caddress)
+
+
+while True:
+   
+    val = bus.read_i2c_block_data(sensor_address, temp_ram_loc, 2)
+    if(val[0] < 19):
+            print("too bright")
+    if(val[0] > 18):
+            print("bright")
+    if(val[0] > 23):
+            print("medium")
+    if(val[0] > 26):
+            print("dark")
+    if(val[0] > 27):
+            print("too dark")      
+            
+    time.sleep(5)
